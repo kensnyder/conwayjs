@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>conwayjs.com | Conway's Game of Life with HTML5 Canvas</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="/game.php"></script>
+		<link rel="stylesheet" href="/css/game.css" />
+	</head>
+	<body>
+		<div id="board"></div>
+		<div id="controls">
+			<select id="ruleSelect"></select> &nbsp; &nbsp;
+			<input id="seedSelect" type="button" /> &nbsp; &nbsp;
+			<input id="startButton" type="button" /> &nbsp; &nbsp;
+			<input id="resetButton" type="button" value="Reset" /> &nbsp; &nbsp;
+			<input id="saveButton" type="button" value="Save State" /> &nbsp; &nbsp;
+			Speed: <select id="intervalSelect"></select> &nbsp; &nbsp;
+			Cell Size: <select id="blockSizeSelect"></select> &nbsp; &nbsp;
+			Gridlines: <select id="gridlinesSelect"></select> &nbsp; &nbsp;
+		</div>
+		<div id="content"></div>
+		<script>
+			var $content = $('#content');
+			GameControls.prototype.setupSeedSelect = function(button) {
+				button.value = 'Pick Shape';
+				$(button).click(function() {
+					$content.html('Loading...').show().load('/game_shapes/browse/8');
+				});
+			};
+			$content.delegate('.shape a', 'click', function(evt) {
+				evt.preventDefault();
+				$.ajax({
+					url:evt.target.href
+				}).done(function(shape) {
+					controls.runner.stop();
+					controls.runner.game.reset();
+					GameShapes.add(controls.runner.game, shape.spec);
+					controls.runner.renderer.draw();
+				});
+				$content.hide();
+			});
+			var controls = new GameControls(
+				document.getElementById('controls'),
+				document.getElementById('board')
+			);
+		</script>
+	</body>
+</html>
