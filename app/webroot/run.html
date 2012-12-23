@@ -18,26 +18,49 @@
 			Cell Size: <select id="blockSizeSelect"></select> &nbsp; &nbsp;
 			Gridlines: <select id="gridlinesSelect"></select> &nbsp; &nbsp;
 		</div>
-		<div id="content"></div>
+		<div id="panel">
+			<header class="panel-header">
+				<a class="panel-back" href="#"><span>Back</span></a>
+				<a class="panel-close" href="#"><span>X</span></a>
+				<img class="panel-logo" src="/img/logo-white.png" width="72" height="16" alt="conwayjs" />
+			</header>
+			<div id="panel-content-area"></div>
+		</div>
 		<script>
-			var $content = $('#content');
-			GameControls.prototype.setupSeedSelect = function(button) {
+			var $panel = $('#panel');
+			var $panelContent = $('#panel-content-area');
+			GameControls.prototype._setupSeedSelect = function() {
+				var button = this.elements.seedSelect;
 				button.value = 'Pick Shape';
 				$(button).click(function() {
-					$content.html('Loading...').show().load('/game_shapes/browse/8');
+					if ($panelContent.html() == '') {						
+						$panelContent.html('Loading...').load('/game_shape_categories/browse');
+					}
+					$panel.show();
 				});
 			};
-			$content.delegate('.shape a', 'click', function(evt) {
+			$panel.delegate('.panel-close', 'click', function(evt) {
 				evt.preventDefault();
+				$panel.hide();
+			});
+			$panelContent.delegate('.shape .item-nav-link', 'click', function(evt) {
+				evt.preventDefault();
+				evt.stopImmediatePropagation();
+				var href = $(this).prop('href');
 				$.ajax({
-					url:evt.target.href
+					url: href
 				}).done(function(shape) {
-					controls.runner.stop();
-					controls.runner.game.reset();
-					GameShapes.add(controls.runner.game, shape.spec);
-					controls.runner.renderer.draw();
+					controls.reset();
+					GameShapes.add(controls, shape.spec);
+					controls.renderer.draw();
 				});
-				$content.hide();
+				$panel.hide();
+			});
+			$panelContent.delegate('.category .item-nav-link', 'click', function(evt) {
+				evt.preventDefault();
+				console.log(this);
+				var href = $(this).prop('href');
+				$panelContent.html('Loading...').load(href);
 			});
 			var controls = new GameControls(
 				document.getElementById('controls'),

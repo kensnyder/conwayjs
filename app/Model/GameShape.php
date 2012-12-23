@@ -15,14 +15,14 @@ class GameShape extends AppModel {
 				'id','name','desc','comments','link','found_year','found_by','image_path','image_width','image_height','lifespan','created_by'
 			),
 			'conditions' => array(
-				'size_x IS NOT NULL',
+				'size_x > 0',
 				'game_shape_category_id' => $catId,
 			),
 			'contain' => array(
 				'GameRule' => array('id','name','rulestring','link'),
 				'User' => array('id','name','is_active')
 			),
-			'order' => array('hits DESC')
+			'order' => array('GameShape.name')
 		));
 		return $shapes;
 	}

@@ -11,6 +11,7 @@ class GameShapeCategoriesController extends AppController {
 		$categories = $this->GameShapeCategory->find('all');
 		$this->set(compact('categories'));
 		$this->setJsonVars('categories');
+		$this->layout = 'panel';
 	}
 	
 /**

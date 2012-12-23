@@ -6,12 +6,13 @@ App::uses('AppController', 'Controller');
  * @property GameShape $GameShape
  */
 class GameShapesController extends AppController {
-
+	
 	public function browse($catId) {
 		$category = $this->getModel('GameShapeCategory')->findById($catId);
 		$shapes = $this->GameShape->findByCategory($catId);
 		$this->set(compact('shapes','category'));
 		$this->setJsonVars('shapes,category');
+		$this->layout = 'panel';
 	}
 	
 	public function spec($shapeId) {
@@ -21,9 +22,15 @@ class GameShapesController extends AppController {
 			$s = (object) $shape['GameShape'];
 			$spec = array(
 				'size' => array((int) $s->size_x, (int) $s->size_y),
-				'start_position' => $s->start_position,
+				'pos' => $s->start_position,
 				'rule' => $shape['GameRule']['rulestring'],
 			);
+			if ($s->start_block_size) {
+				$spec['zoom'] = $s->start_block_size;
+			}
+			if ($s->start_speed !== null) {
+				$spec['speed'] = (int) $s->start_speed;
+			}
 			$spec[$s->format] = $s->spec;
 			$this->GameShape->addHit($shapeId);
 		}
