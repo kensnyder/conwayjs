@@ -7,7 +7,7 @@
 			<h2 class="item-title"><?php echo h($shape['GameShape']['name'])?></h2>
 			<p class="item-description"><?php echo h(trim($shape['GameShape']['desc'] . ' ' . $shape['GameShape']['comments']))?></p>
 			<?php if($shape['GameShape']['link']) { ?>
-				<p class="item-description item-link"><a href="<?php echo h($shape['GameShape']['link'])?>">Wiki</a></p>
+				<p class="item-description item-link"><a target="_blank" href="<?php echo h($shape['GameShape']['link'])?>">Wiki</a></p>
 			<?php } ?>
 		</div>
 		<div class="item-column item-nav">

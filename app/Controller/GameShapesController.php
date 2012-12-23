@@ -26,7 +26,12 @@ class GameShapesController extends AppController {
 				'rule' => $shape['GameRule']['rulestring'],
 			);
 			if ($s->start_block_size) {
-				$spec['zoom'] = $s->start_block_size;
+				if ($s->start_block_size < 0) {
+					$spec['zoom'] = -1 / $s->start_block_size;
+				}
+				else {
+					$spec['zoom'] = $s->start_block_size;
+				}
 			}
 			if ($s->start_speed !== null) {
 				$spec['speed'] = (int) $s->start_speed;

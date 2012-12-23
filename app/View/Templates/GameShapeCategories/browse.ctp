@@ -6,9 +6,9 @@
 			</h2>
 			<p class="item-description">
 				<?php echo h($c->description)?>
-			</p>
-			<p class="item-description item-link">
-				<a href="<?php echo h($c->link)?>">Wiki</a>
+				<?php if ($c->link) { ?>
+					<a target="_blank" href="<?php echo h($c->link)?>">Wiki</a>
+				<?php } ?>
 			</p>
 		</div>
 		<div class="item-column item-nav">

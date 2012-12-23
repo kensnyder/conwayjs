@@ -20,7 +20,7 @@
 		</div>
 		<div id="panel">
 			<header class="panel-header">
-				<a class="panel-back" href="#"><span>Back</span></a>
+				<a class="panel-back" href="#" style="display: none"><span>Back</span></a>
 				<a class="panel-close" href="#"><span>X</span></a>
 				<img class="panel-logo" src="/img/logo-white.png" width="72" height="16" alt="conwayjs" />
 			</header>
@@ -29,6 +29,7 @@
 		<script>
 			var $panel = $('#panel');
 			var $panelContent = $('#panel-content-area');
+			var $back = $('.panel-back');
 			GameControls.prototype._setupSeedSelect = function() {
 				var button = this.elements.seedSelect;
 				button.value = 'Pick Shape';
@@ -61,6 +62,11 @@
 				console.log(this);
 				var href = $(this).prop('href');
 				$panelContent.html('Loading...').load(href);
+				$back.show();
+			});
+			$back.click(function() {
+				$panelContent.html('Loading...').load('/game_shape_categories/browse');
+				$back.hide();
 			});
 			var controls = new GameControls(
 				document.getElementById('controls'),
