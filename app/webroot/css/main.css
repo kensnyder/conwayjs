@@ -1,0 +1,23 @@
+body, select, input, textarea {
+	font-family: Istok, Helvetica, Arial, sans-serif;
+}
+body {
+	line-height: 150%;
+}
+select {
+	line-height: 110%;
+}
+input {
+	line-height: 100%;
+}
+textarea {
+	line-height: 130%;
+}
+em {
+	font-style: normal;
+	font-family: IstokItalic;
+}
+strong {
+	font-weight: normal;
+	font-family: IstokBold;
+}

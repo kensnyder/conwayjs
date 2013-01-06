@@ -1,0 +1,32 @@
+.modal-cover {
+	background-color: #202020;
+	opacity: 0.80;
+}
+.modal-dialog {
+	background-color: #fff;
+	border: 8px solid #FFFFFF;
+    border-radius: 8px;	
+}
+.modal-close {
+	display: block;
+	float: right;
+	width: 16px;
+	height: 16px;
+	padding-bottom: 4px;
+	background: url(/img/close-black.png) no-repeat 0 0;
+	text-decoration: none;
+	opacity: 0.75;
+	cursor: pointer;
+}
+.modal-close:hover {
+	opacity: 1;
+	text-decoration: none;
+}
+.modal-loading {
+	background: url(/img/loading-32.gif) no-repeat 50% 50%;
+}
+.modal-content {
+	border: none;
+	padding: 0;
+	margin: 0;
+}

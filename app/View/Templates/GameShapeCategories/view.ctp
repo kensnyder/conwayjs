@@ -62,7 +62,7 @@
 		<th><?php echo __('Game Rule Id'); ?></th>
 		<th><?php echo __('Format'); ?></th>
 		<th><?php echo __('Spec'); ?></th>
-		<th><?php echo __('Lifespan'); ?></th>
+		<th><?php echo __('Period'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('User Id'); ?></th>
 		<th><?php echo __('Created By'); ?></th>
@@ -90,7 +90,7 @@
 			<td><?php echo $gameShape['game_rule_id']; ?></td>
 			<td><?php echo $gameShape['format']; ?></td>
 			<td><?php echo $gameShape['spec']; ?></td>
-			<td><?php echo $gameShape['lifespan']; ?></td>
+			<td><?php echo $gameShape['period']; ?></td>
 			<td><?php echo $gameShape['created']; ?></td>
 			<td><?php echo $gameShape['user_id']; ?></td>
 			<td><?php echo $gameShape['created_by']; ?></td>

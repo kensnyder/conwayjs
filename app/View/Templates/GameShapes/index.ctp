@@ -20,7 +20,7 @@
 			<th><?php echo $this->Paginator->sort('game_rule_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('format'); ?></th>
 			<th><?php echo $this->Paginator->sort('spec'); ?></th>
-			<th><?php echo $this->Paginator->sort('lifespan'); ?></th>
+			<th><?php echo $this->Paginator->sort('period'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('created_by'); ?></th>
@@ -50,7 +50,7 @@
 		</td>
 		<td><?php echo h($gameShape['GameShape']['format']); ?>&nbsp;</td>
 		<td><?php echo h($gameShape['GameShape']['spec']); ?>&nbsp;</td>
-		<td><?php echo h($gameShape['GameShape']['lifespan']); ?>&nbsp;</td>
+		<td><?php echo h($gameShape['GameShape']['period']); ?>&nbsp;</td>
 		<td><?php echo h($gameShape['GameShape']['created']); ?>&nbsp;</td>
 		<td><?php echo h($gameShape['GameShape']['user_id']); ?>&nbsp;</td>
 		<td><?php echo h($gameShape['GameShape']['created_by']); ?>&nbsp;</td>

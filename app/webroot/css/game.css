@@ -1,3 +1,4 @@
+/* conwayjs.com styles */
 a {
 	color: #1e3ef6;
 	text-decoration: underline;
@@ -5,33 +6,11 @@ a {
 a:hover {
 	text-decoration: none;
 }
-html, body, #board, #content {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	position: relative;
-	overflow: hidden;
+#logoLink {
+	text-decoration: none;
+	margin-left: 8px;
 }
-#controls {
-	background: #ddd url(/img/logo.png) no-repeat 8px 50%;
-	padding: 3px 8px 3px 110px;
-	position: absolute;
-	opacity: 0.50;
-	-webkit-transition: all 0.33s;
-	-moz-transition: all 0.33s;
-	-ms-transition: all 0.33s;
-	-o-transition: all 0.33s;
-	transition: all 0.33s;
-	top: 0;
-	left: 0;
-	width: 100%;
-	cursor: default;
-	overflow: hidden;
-}
-#controls:hover {
-	opacity: 1;
-}
-#board, #panel {
+#panel {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -44,10 +23,6 @@ html, body, #board, #content {
 	overflow-y: scroll;
 	background-color: #fff;
 	box-shadow: 5px 0 12px rgba(0, 0, 0, 0.5);
-}
-body, select, input {
-	font: 14px Arial;
-	line-height: 140%;
 }
 .panel-header {
 	height: 30px;

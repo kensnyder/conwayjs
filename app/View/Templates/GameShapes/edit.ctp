@@ -21,7 +21,7 @@
 		echo $this->Form->input('game_rule_id');
 		echo $this->Form->input('format');
 		echo $this->Form->input('spec');
-		echo $this->Form->input('lifespan');
+		echo $this->Form->input('period');
 		echo $this->Form->input('user_id');
 		echo $this->Form->input('created_by');
 	?>

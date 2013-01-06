@@ -27,7 +27,7 @@ class GameShapeFixture extends CakeTestFixture {
 		'rulestring' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 21, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'game_rule_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'key' => 'index'),
 		'spec' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
-		'lifespan' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'period' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
@@ -61,7 +61,7 @@ class GameShapeFixture extends CakeTestFixture {
 			'rulestring' => 'Lorem ipsum dolor s',
 			'game_rule_id' => 1,
 			'spec' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'lifespan' => 1,
+			'period' => 1,
 			'created' => '2012-12-16 03:59:35'
 		),
 	);

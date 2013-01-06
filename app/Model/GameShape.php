@@ -12,7 +12,7 @@ class GameShape extends AppModel {
 	public function findByCategory($catId) {
 		$shapes = $this->find('all', array(
 			'fields' => array(
-				'id','name','desc','comments','link','found_year','found_by','image_path','image_width','image_height','lifespan','created_by'
+				'id','name','desc','comments','link','found_year','found_by','image_path','image_width','image_height','period','created_by'
 			),
 			'conditions' => array(
 				'size_x > 0',
@@ -32,6 +32,20 @@ class GameShape extends AppModel {
 			array('GameShape.hits' => 'GameShape.hits + 1'),
 			array('GameShape.id' => $shapeId)
 		);		
+	}
+	
+	public function getStartPositions() {
+		return array(
+			'top left',
+			'top center',
+			'top right',
+			'middle left',
+			'middle center',
+			'middle right',
+			'bottom left',
+			'bottom center',
+			'bottom right',
+		);
 	}
 
 /**

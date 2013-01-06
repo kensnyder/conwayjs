@@ -1,22 +1,65 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8" />
 		<title>conwayjs.com | Conway's Game of Life with HTML5 Canvas</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script src="/game.php"></script>
-		<link rel="stylesheet" href="/css/game.css" />
+		<script src="/game.js.php"></script>
+		<link rel="stylesheet" href="/game.css.php" />
 	</head>
 	<body>
 		<div id="board"></div>
 		<div id="controls">
-			<select id="ruleSelect"></select> &nbsp; &nbsp;
-			<input id="seedSelect" type="button" /> &nbsp; &nbsp;
-			<input id="startButton" type="button" /> &nbsp; &nbsp;
-			<input id="resetButton" type="button" value="Reset" /> &nbsp; &nbsp;
-			<input id="saveButton" type="button" value="Save State" /> &nbsp; &nbsp;
-			Speed: <select id="intervalSelect"></select> &nbsp; &nbsp;
-			Cell Size: <select id="blockSizeSelect"></select> &nbsp; &nbsp;
-			Gridlines: <select id="gridlinesSelect"></select> &nbsp; &nbsp;
+			<div id="controlsMain">
+				<a id="logoLink" class="control" title="About conwayjs.com" href="#">
+					<img src="/img/logo.png" width="81" height="18" alt="conwayjs" />
+				</a>
+				<span class="control">
+					<input id="seedSelect" type="button" />
+				</span>
+				<span class="control">
+					<input id="startButton" type="button" />
+				</span>
+				<span class="control">
+					<input id="resetButton" type="button" value="Reset" />
+				</span>
+				<span class="control">
+					<input id="saveButton" type="button" value="Save" />
+				</span>				
+			</div>
+			<a id="optionsButton" title="Options..." href="#">⚙ <span id="optionsSummary"></span></a>
+			<div id="options" style="display:none">
+				<table>
+					<tr>
+						<th>Cell Size:</th>
+						<td>
+							<select id="blockSizeSelect"></select>
+							<input id="autoSize" type="button" value="Auto" />
+						</td>
+					</tr>
+					<tr>
+						<th>Rule:</th>
+						<td><select id="ruleSelect"></select></td>
+					</tr>
+					<tr>
+						<th>Trail:</th>
+						<td><select id="visitedSelect"></select></td>
+					</tr>
+					<tr>
+						<th>Gridlines:</th>
+						<td><select id="gridlinesSelect"></select></td>
+					</tr>
+					<tr>
+						<th>Speed:</th>
+						<td><select id="intervalSelect"></select></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">
+							<a id="optionsClose" href="#">Close</a>
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 		<div id="panel">
 			<header class="panel-header">
@@ -26,10 +69,12 @@
 			</header>
 			<div id="panel-content-area"></div>
 		</div>
+		<div id="picker"></div>
 		<script>
 			var $panel = $('#panel');
 			var $panelContent = $('#panel-content-area');
 			var $back = $('.panel-back');
+			var startingPng = '';
 			GameControls.prototype._setupSeedSelect = function() {
 				var button = this.elements.seedSelect;
 				button.value = 'Pick Shape';
@@ -38,6 +83,20 @@
 						$panelContent.html('Loading...').load('/game_shape_categories/browse');
 					}
 					$panel.show();
+				});
+			};
+			function sendShapeDetails() {
+				new WindowMessager(this)
+					.send('setStartingImg', {})
+					.send('setCurrentImg', controls.toPng())
+				;
+			}
+			GameControls.prototype.save = function() {
+				var modal = new Modal({
+					width: 800,
+					height: {viewportMinus:50},
+					url: '/game_shapes/save',
+					onload: sendShapeDetails
 				});
 			};
 			$panel.delegate('.panel-close', 'click', function(evt) {
@@ -72,6 +131,7 @@
 				document.getElementById('controls'),
 				document.getElementById('board')
 			);
+			
 		</script>
 	</body>
 </html>

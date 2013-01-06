@@ -47,10 +47,26 @@ class GameShapesController extends AppController {
 	}
 	
 	public function submit() {
-		if (!empty($this->request->datay)) {
+		$this->setTitle('Add New Shape');
+		if (!empty($this->request->data)) {
 			$this->request->data['GameShape']['is_user_submitted'] = '1';
 			$this->GameShape->save($this->request->data);
 		}
+	}
+	
+	public function save() {
+		$this->setTitle('Add New Shape');
+		if (!empty($this->request->data)) {
+			$this->request->data['GameShape']['is_user_submitted'] = '1';
+			$this->GameShape->save($this->request->data);
+		}
+		$gameShapeCategories = $this->getModel('GameShapeCategory')->find('list');
+		$gameRules = $this->getModel('GameRule')->find('list', array(
+			'order' => 'sort'
+		));
+		$startPositions = $this->GameShape->getStartPositions();
+		$this->set(compact('gameShapeCategories','gameRules','startPositions'));
+		$this->layout = 'modal';
 	}
 	
 /**

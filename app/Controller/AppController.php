@@ -47,6 +47,12 @@ class AppController extends Controller {
 		$this->set('_serialize', $fields);
 	}
 	
+	public function setTitle($title) {
+		$this->set('h1', preg_replace('/^(.+) :: .+$/', '$1', $title));
+		$this->set('title_for_layout', "$title :: conwayjs.com");
+		return $this;
+	}
+	
 	public $helpers = array(
 		// Cake helpers
 		'Html',

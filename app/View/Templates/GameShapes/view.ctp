@@ -91,9 +91,9 @@
 			<?php echo h($gameShape['GameShape']['spec']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Lifespan'); ?></dt>
+		<dt><?php echo __('Period'); ?></dt>
 		<dd>
-			<?php echo h($gameShape['GameShape']['lifespan']); ?>
+			<?php echo h($gameShape['GameShape']['period']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>
