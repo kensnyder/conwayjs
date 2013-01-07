@@ -3,22 +3,24 @@
 	<table class="layout">
 		<tr>
 			<td id="SaveShapeImages">
-				<label>Choose a shape</label>
 				<fieldset id="ChooseStartingImg">
-					<legend>Starting Shape</legend>
+					<legend><label><input type="radio" name="shape" /> Starting Shape</label></legend>
 					<img id="StartingImg" src="data:image/gif;base64," alt="" />
 				</fieldset>
 				<fieldset id="ChooseCurrentImg">
-					<legend>Current Shape</legend>
+					<legend><label><input type="radio" name="shape" /> Current Shape</label></legend>
 					<img id="CurrentImg" src="data:image/gif;base64," alt="" />
 				</fieldset>
-				<label>or paste a RLE spec</label>
-				<?php echo $this->Form->input('rle', array(
-					'type' => 'textarea',
-					'cols' => 20,
-					'rows' => 3,
-				))?>
-				<?php echo $this->Form->input('points', array(
+				<fieldset id="PasteRle">
+					<legend><label><input type="radio" name="shape" /> Paste RLE File</label></legend>
+					<?php echo $this->Form->input('rle', array(
+						'label'=> false,
+						'type' => 'textarea',
+						'cols' => 20,
+						'rows' => 3,
+					))?>
+				</fieldset>
+				<?php echo $this->Form->input('spec', array(
 					'type' => 'hidden',
 				))?>
 			</td>
@@ -77,30 +79,38 @@
 
 <script>
 (function() { "use strict";
+	var $shapes = $('#SaveShapeImages fieldset');
+	var $radios = $('#SaveShapeImages input[type=radio]');
+	var $spec = $('#GameShapeSpec');
+	$shapes.click(function() {
+		var $shape = $(this);
+		$shapes.removeClass('selected');
+		$shape.addClass('selected');
+		$radios.each(function() {
+			this.checked = false;
+		});
+		$shape.find('input[type=radio]')[0].checked = true;
+		$spec.val($shape.find('img').data('spec'));
+	});
+	
 	var $starting = $('#ChooseStartingImg');
 	var $current = $('#ChooseCurrentImg')
 	var $points = $('#GameShapePoints');
+	var startingRadio = $('#ChooseStartingRadio')[0];
+	var currentRadio = $('#ChooseCurrentRadio')[0];
 	new WindowMessager(window.parent)
 		.on('setStartingImg', function(spec) {
-			$('#StartingImg').prop('src', spec.png);
-			var chooseStarting = function() {
-				$points.val(spec.points);
-				$starting.addClass('selected');
-				$current.removeClass('selected');
-			};
-			$starting.click(chooseStarting);
-			chooseStarting();
-console.log('setStartingImg', spec);
+			$('#StartingImg')
+				.prop('src', spec.png)
+				.data('spec', JSON.stringify(spec))
+				.click()
+			;
 		})
 		.on('setCurrentImg', function(spec) {
-			$('#CurrentImg').prop('src', spec.png);
-			var chooseCurrent = function() {
-				$points.val(spec.points);
-				$current.addClass('selected');
-				$starting.removeClass('selected');
-			};
-			$current.click(chooseCurrent);
-console.log('setCurrentImg', spec);
+			$('#CurrentImg')
+				.prop('src', spec.png)
+				.data('spec', JSON.stringify(spec))
+			;
 		})
 	;
 }());

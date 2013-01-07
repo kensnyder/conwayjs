@@ -1,6 +1,5 @@
 .modal-cover {
-	background-color: #202020;
-	opacity: 0.80;
+	background-color: rgba(40,40,40,0.80);
 }
 .modal-dialog {
 	background-color: #fff;
@@ -26,6 +25,7 @@
 	background: url(/img/loading-32.gif) no-repeat 50% 50%;
 }
 .modal-content {
+	background-color: #fff;
 	border: none;
 	padding: 0;
 	margin: 0;

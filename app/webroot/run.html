@@ -74,7 +74,7 @@
 			var $panel = $('#panel');
 			var $panelContent = $('#panel-content-area');
 			var $back = $('.panel-back');
-			var startingPng = '';
+			var startingPng = false;
 			GameControls.prototype._setupSeedSelect = function() {
 				var button = this.elements.seedSelect;
 				button.value = 'Pick Shape';
@@ -85,17 +85,35 @@
 					$panel.show();
 				});
 			};
+			(function(start) {
+				GameControls.prototype.start = function() {
+					startingPng = controls.toPng();
+					start.call(this);
+				};
+			}(GameControls.prototype.start));
+			(function(reset) {
+				GameControls.prototype.reset = function() {
+					startingPng = false;
+					reset.call(this);
+				};
+			}(GameControls.prototype.reset));
 			function sendShapeDetails() {
+				var newPng = controls.toPng();
 				new WindowMessager(this)
-					.send('setStartingImg', {})
-					.send('setCurrentImg', controls.toPng())
+					.send('setCurrentImg', newPng)
+					.send('setStartingImg', startingPng || newPng)
 				;
 			}
 			GameControls.prototype.save = function() {
+				if (this.game.numPoints == 0) {
+					alert('Before saving, please choose a shape or click squares to add cells.');
+					return false;
+				}				
 				var modal = new Modal({
 					width: 800,
 					height: {viewportMinus:50},
 					url: '/game_shapes/save',
+					origin: this.elements.saveButton,
 					onload: sendShapeDetails
 				});
 			};
@@ -113,6 +131,7 @@
 					controls.reset();
 					GameShapes.add(controls, shape.spec);
 					controls.renderer.draw();
+					startingPng = controls.toPng();
 				});
 				$panel.hide();
 			});

@@ -47,10 +47,14 @@ Modal.prototype = {
 				top: '0',
 				left: '0',
 				width: size.viewportWidth + 'px',
-				height: size.viewportHeight + 'px'
+				height: size.viewportHeight + 'px',
+				opacity: '0'
 			})
 			.click(this.close)
 			.appendTo(document.body)
+			.animate({
+				opacity: '1'
+			}, 300);
 		;
 		return this;
 	},
@@ -59,13 +63,19 @@ Modal.prototype = {
 		this.$dialog = $(this.options.html.dialog)
 			.css({
 				position: 'absolute',
+				top: size.originTop + 'px',
+				left: size.originLeft + 'px',
+				width: size.originWidth + 'px',
+				height: size.originHeight + 'px'			
+			})
+			.addClass('modal-loading')
+			.appendTo(document.body)
+			.animate({
 				top: size.top + 'px',
 				left: size.left + 'px',
 				width: size.width + 'px',
 				height: size.height + 'px'			
-			})
-			.addClass('modal-loading')
-			.appendTo(document.body);
+			}, 300);
 		this.$close = this.$dialog.find('.modal-close').click(this.close);
 		this.$content = this.$dialog.find('.modal-content')
 			.css({
@@ -128,13 +138,39 @@ Modal.prototype = {
 			Math.max(5, Math.floor( (size.viewportWidth - size.width) / 2 )) :
 			this.options.left
 		);
+		if (this.options.origin) {
+			var $origin = $(this.options.origin);
+			var offset = $origin.offset();
+			size.originTop = offset.top;
+			size.originLeft = offset.left;
+			size.originWidth = $origin.outerWidth();
+			size.originHeight = $origin.outerHeight();
+		}
+		else {
+			size.originTop = Math.floor( (size.viewportWidth - size.width) / 2 );
+			size.originLeft = Math.floor( (size.viewportHeight - size.height) / 2 );
+			size.originWidth = 20;
+			size.originHeight = 20;
+		}
 		return size;
 	},
 	close: function() {
-		this.$dialog.remove();
-		this.$cover.remove();
-		this.$dialog = null;
-		this.$cover = null;
+		var size = this.getSize();
+		this.$dialog.animate({
+			top: size.originTop + 'px',
+			left: size.originLeft + 'px',
+			width: size.originWidth + 'px',
+			height: size.originHeight + 'px'			
+		}, 300, function() {
+			this.$dialog.remove();
+			this.$dialog = null;
+		}.bind(this));
+		this.$cover.animate({
+			opacity: '1'
+		}, 300, function() {
+			this.$cover.remove();
+			this.$cover = null;
+		}.bind(this));
 		Modal.openModals = Modal.openModals.filter(function(modal) {
 			return modal !== this;
 		}.bind(this));

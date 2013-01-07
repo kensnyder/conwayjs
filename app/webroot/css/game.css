@@ -1,14 +1,10 @@
 /* conwayjs.com styles */
-a {
-	color: #1e3ef6;
-	text-decoration: underline;
-}
-a:hover {
-	text-decoration: none;
-}
 #logoLink {
 	text-decoration: none;
 	margin-left: 8px;
+}
+.control input {
+	height: 23px;
 }
 #panel {
 	position: absolute;
@@ -124,4 +120,13 @@ a:hover {
 }
 .item-nav-link:hover {
 	opacity: 1.0;
+}
+#StartingImg,
+#CurrentImg {
+	max-width: 200px;
+	max-height: 200px;
+}
+.layout td,
+.layout th {
+	vertical-align: top;
 }
