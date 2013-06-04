@@ -8,7 +8,7 @@ App::uses('AppController', 'Controller');
 class GameShapeCategoriesController extends AppController {
 
 	public function browse() {
-		$categories = $this->GameShapeCategory->find('all');
+		$categories = $this->GameShapeCategory->getCategories();
 		$this->set(compact('categories'));
 		$this->setJsonVars('categories');
 		$this->layout = 'panel';

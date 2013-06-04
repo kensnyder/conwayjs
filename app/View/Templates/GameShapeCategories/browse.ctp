@@ -1,3 +1,10 @@
+<form class="item-box category search" method="post" target="/game_shapes/search">
+	<div class="item-column">
+		<input type="text" name="term" value="" placeholder="Search for a shape..." />
+		<input type="submit" name="go" value="Search" />
+	</div>
+	<div class="item-column item-nav">&nbsp;</div>
+</form>
 <?php foreach (Set::map($categories) as $c) { ?>
 	<div class="item-box category">
 		<div class="item-column">

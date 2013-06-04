@@ -8,17 +8,43 @@ App::uses('AppController', 'Controller');
 class GameShapesController extends AppController {
 	
 	public function browse($catId) {
-		$category = $this->getModel('GameShapeCategory')->findById($catId);
-		$shapes = $this->GameShape->findByCategory($catId);
+		if ($catId == 'user') {
+			$category = 'User Submissions';
+			$shapes = $this->GameShape->getUnapproved();
+		}
+		elseif ($catId == 'random') {
+			$category = $this->getModel('GameShapeCategory')->getRandomlyFilled();
+			$shapes = $this->GameShape->getRandomlyFilled();
+		}
+		else {
+			$category = $this->getModel('GameShapeCategory')->findById($catId);
+			$shapes = $this->GameShape->findByCategory($catId);
+		}
 		$this->set(compact('shapes','category'));
-		$this->setJsonVars('shapes,category');
 		$this->layout = 'panel';
 	}
 	
+	public function search() {
+		$category = 'Search Results';
+		$shapes = $this->GameShape->search($_REQUEST['term']);
+		$this->set(compact('shapes','category'));
+		$this->layout = 'panel';
+		$this->view = 'browse';
+	}
+	
 	public function spec($shapeId) {
-		$this->GameShape->contain('GameRule');
-		$shape = $this->GameShape->findById($shapeId);
-		if ($shape) {
+		if (preg_match('/^random(\d+)/', $shapeId, $match)) {
+			$percent = $match[1];
+			$spec = array(
+				'random' => true,
+				'ratio' => "0.$percent",
+			);
+			$name = "Randomly filled: $percent%";
+		}			
+		else {
+			$shapeId = Cipher::usePreset('Id')->unobfuscate($shapeId);
+			$this->GameShape->contain('GameRule');
+			$shape = $this->GameShape->findById($shapeId);
 			$s = (object) $shape['GameShape'];
 			$spec = array(
 				'size' => array((int) $s->size_x, (int) $s->size_y),
@@ -37,13 +63,11 @@ class GameShapesController extends AppController {
 				$spec['speed'] = (int) $s->start_speed;
 			}
 			$spec[$s->format] = $s->spec;
+			$name = $shape['GameShape']['name'];
 			$this->GameShape->addHit($shapeId);
 		}
-		else {
-			$spec = array();
-		}
-		$this->set(compact('spec'));
-		$this->setJsonVars('spec');
+		$this->set(compact('name','spec'));
+		$this->setJsonVars(array('name','spec'));
 	}
 	
 	public function submit() {
@@ -57,8 +81,11 @@ class GameShapesController extends AppController {
 	public function save() {
 		$this->setTitle('Add New Shape');
 		if (!empty($this->request->data)) {
+			$this->_saveImage();
 			$this->request->data['GameShape']['is_user_submitted'] = '1';
+			$this->request->data['GameShape']['is_approved'] = '0';
 			$this->GameShape->save($this->request->data);
+			$this->redirect('saved_ok');
 		}
 		$gameShapeCategories = $this->getModel('GameShapeCategory')->find('list');
 		$gameRules = $this->getModel('GameRule')->find('list', array(
@@ -67,6 +94,25 @@ class GameShapesController extends AppController {
 		$startPositions = $this->GameShape->getStartPositions();
 		$this->set(compact('gameShapeCategories','gameRules','startPositions'));
 		$this->layout = 'modal';
+	}
+	
+	public function saved_ok() {
+		die('Saved ok.');
+	}
+	
+	protected function _saveImage() {
+		$dataURI = $this->request->data['GameShape']['image'];
+		$base64 = preg_replace('/data:.+,/', '', $dataURI);
+		$filename = md5(microtime(true) . uniqid()) . '.png';
+		$path = APP . "/Writeable/shapes/$filename";
+		$bytes = file_put_contents($path, base64_decode($base64));
+		if ($bytes > 0) {
+			$size = getimagesize($path);
+			$this->request->data['GameShape']['image_width'] = $size[0];
+			$this->request->data['GameShape']['image_height'] = $size[1];
+			$this->request->data['GameShape']['image_path'] = "/shapes/$filename";
+		}
+		unset($this->request->data['GameShape']['image']);		
 	}
 	
 /**

@@ -57,5 +57,36 @@ class GameShapeCategory extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	public function getCategories() {
+		$categories = array_merge(
+			array($this->getUserSubmitted()),
+			array($this->getRandomlyFilled()),
+			$this->find('all')
+		);
+		return $categories;	
+	}
+	
+	public function getUserSubmitted() {
+		return array(
+			'GameShapeCategory' => array(
+				'id' => 'user',
+				'name' => 'User Submissions',
+				'description' => 'Submissions from users of this site that have not yet been approved',
+				'link' => false,
+			)
+		);
+	}
+	
+	public function getRandomlyFilled() {
+		return array(
+			'GameShapeCategory' => array(
+				'id' => 'random',
+				'name' => 'Randomly Filled Board',
+				'description' => 'Randomly fill the board with points',
+				'link' => false,
+			)
+		);
+	}
 
 }

@@ -1,4 +1,8 @@
 /* conwayjs.com styles */
+html.modal,
+html.modal body {
+	overflow: auto;	
+}
 #logoLink {
 	text-decoration: none;
 	margin-left: 8px;
@@ -23,6 +27,9 @@
 .panel-header {
 	height: 30px;
 	text-align: center;
+	position: fixed;
+	width: 500px;
+	z-index: 2;
 	background: #0439ff; /* Old browsers */
 	background: -moz-linear-gradient(top,  #0439ff 0%, #0804ed 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0439ff), color-stop(100%,#0804ed)); /* Chrome,Safari4+ */
@@ -81,6 +88,7 @@
 .panel-content {
 	display: table;
 	width: 100%;
+	margin-top: 30px;
 }
 .item-box {
 	display: table-row;
@@ -97,6 +105,7 @@
 .shape-thumb {
 	padding-right: 8px;
 	vertical-align: top;
+	width: 100px;
 }
 .item-details {
 	display: inline-block;
@@ -115,18 +124,59 @@
 	cursor: pointer;
 	padding-left: 12px;
 }
-.item-nav-link {
+.item-nav .item-nav-link {
 	opacity: 0.50;
 }
-.item-nav-link:hover {
+.item-nav .item-nav-link:hover {
 	opacity: 1.0;
 }
-#StartingImg,
-#CurrentImg {
+.modal-loading {
+	background: #fff url("/img/loading-32.gif") no-repeat 50% 50%;
+}
+.modal-loading iframe {
+	display: none;
+}
+.modal #Content {
+	padding: 2px 18px;
+}
+#SaveShapeImages fieldset {
+	text-align: center;
+	width: 200px;
+}
+#SaveShapeImages img {
 	max-width: 200px;
-	max-height: 200px;
+	max-height: 143px;
 }
 .layout td,
 .layout th {
 	vertical-align: top;
+}
+#SaveShapeImages textarea {
+	font-size: 12px;
+	width: 198px;
+}
+.save-form label {
+	width: 105px;
+	display: inline-block;
+	vertical-align: top;
+	font-weight: normal;
+	margin-top: 4px;
+}
+.save-form textarea,
+.save-form input {
+	width: 225px;
+	margin-top: 2px;
+}
+.save-form select {
+	font-size: 12px;
+	margin-top: 2px;
+	line-height: 105%;
+}
+.save-form option {
+	margin: 0;
+	padding: 0;
+}
+#GameShapeSaveForm .submit {
+	float: right;
+	margin-top: 15px;
 }

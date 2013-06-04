@@ -1,8 +1,53 @@
-<IfModule mod_rewrite.c>
-   RewriteEngine on
-   RewriteRule    ^$ app/webroot/    [L]
-   RewriteRule    (.*) app/webroot/$1 [L]
-</IfModule>
+RewriteEngine On
+
+# Shape images
+RewriteRule ^shapes/(.+) app/Writeable/shapes/$1 [QSA,L]
+# Bypass rewrites for these directories
+RewriteCond %{REQUEST_URI} !^/(shapes|app/Writeable)/
+# Send everything else to CakePHP
+RewriteRule (.*) app/webroot/$1 [QSA,L]
+
+# deny access to non-public files
+RedirectMatch 404 \.ini
+RedirectMatch 404 \.svn
+RedirectMatch 404 \.git
+RedirectMatch 404 \.gitignore
+RedirectMatch 404 \.htaccess
+RedirectMatch 404 \.ctp
+RedirectMatch 404 README.md
 
 # charset
 AddDefaultCharset UTF-8
+
+# add font mime types
+AddType font/ttf .ttf
+AddType font/otf .otf
+AddType application/x-woff .woff
+AddType image/svg+xml .svg
+AddType application/vnd.ms-fontobject .eot
+
+# gzip html, css, js, fonts
+<IfModule mod_deflate.c>
+	# html
+	AddOutputFilterByType DEFLATE text/text
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/xml
+	# css
+	AddOutputFilterByType DEFLATE text/css
+	# javascript
+	AddOutputFilterByType DEFLATE text/javascript
+	AddOutputFilterByType DEFLATE application/x-javascript
+	AddOutputFilterByType DEFLATE application/javascript
+	# rss
+	AddOutputFilterByType DEFLATE application/rss+xml
+	# json
+	AddOutputFilterByType DEFLATE application/json
+	# fonts
+	AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+	AddOutputFilterByType DEFLATE font/ttf
+	AddOutputFilterByType DEFLATE font/otf
+	AddOutputFilterByType DEFLATE image/svg+xml	
+</IfModule>
+
+Header set X-UA-Compatible "IE=edge"

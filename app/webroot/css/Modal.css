@@ -1,3 +1,7 @@
+/*
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+*/
 .modal-cover {
 	background-color: rgba(40,40,40,0.80);
 }
@@ -20,9 +24,6 @@
 .modal-close:hover {
 	opacity: 1;
 	text-decoration: none;
-}
-.modal-loading {
-	background: url(/img/loading-32.gif) no-repeat 50% 50%;
 }
 .modal-content {
 	background-color: #fff;

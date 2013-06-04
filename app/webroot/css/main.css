@@ -13,13 +13,21 @@ input {
 textarea {
 	line-height: 130%;
 }
+input[type=number],
+input[type=text],
+textarea {
+	padding: 1px 4px;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15) inset;
+	border: 1px solid #aaa;
+	font-size: 12px;	
+}
 em {
 	font-style: normal;
 	font-family: IstokItalic;
 }
 strong {
 	font-weight: normal;
-	font-family: IstokBold;
+	font-family: IstokBold, Helvetica, Arial, serif;
 }
 a {
 	color: #1e3ef6;
@@ -32,10 +40,19 @@ fieldset {
 	border: 1px solid #ccc;
 	padding: 3px 8px;
 }
+fieldset legend {
+	font-family: IstokBold, Helvetica, Arial, serif;
+	font-weight: normal;	
+}
 fieldset.selected {
 	border: 2px solid #1e3ef6;
 	padding: 2px 7px;
 }
 fieldset.selected legend {
 	color: #1e3ef6;
+}
+h1 {
+	font-weight: normal;
+	margin: 0 0 4px 0;
+	font-size: 24px;
 }

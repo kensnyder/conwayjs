@@ -15,8 +15,9 @@ class GameShape extends AppModel {
 				'id','name','desc','comments','link','found_year','found_by','image_path','image_width','image_height','period','created_by'
 			),
 			'conditions' => array(
-				'size_x > 0',
+				'spec !=' => '',
 				'game_shape_category_id' => $catId,
+				'is_approved' => true,
 			),
 			'contain' => array(
 				'GameRule' => array('id','name','rulestring','link'),
@@ -46,6 +47,51 @@ class GameShape extends AppModel {
 			'bottom center',
 			'bottom right',
 		);
+	}
+	
+	public function getRandomlyFilled() {
+		$shapes = array();
+		for ($i = 10; $i <= 90; $i += 10) {
+			$shapes[] = array('GameShape' => array(
+				'id' => 'random' . $i,
+				'name' => "Randomly filled: $i%",
+				'desc' => '',
+				'comments' => '',
+				'link' => '',
+				'found_year' => '',
+				'found_by' => '',
+				'image_path' => '',
+				'image_width' => '',
+				'image_height' => '',
+				'period' => '',
+				'created_by' => '',				
+			));
+		}
+		return $shapes;
+	}
+	
+	public function getUnapproved() {
+		$shapes = $this->find('all', array(
+			'conditions' => array(
+				'is_approved' => false,
+			)
+		));
+		return $shapes;		
+	}
+	
+	public function search($term) {
+		$shapes = $this->find('all', array(
+			'conditions' => array(
+				'OR' => array(
+					'name LIKE' => "%$term%", 
+					'desc LIKE' => "%$term%", 
+					'comments LIKE' => "%$term%", 
+					'link LIKE' => "%$term%", 
+					'found_by LIKE' => "%$term%", 
+				)
+			)
+		));
+		return $shapes;
 	}
 
 /**

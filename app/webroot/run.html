@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="game">
 	<head>
 		<meta charset="utf-8" />
 		<title>conwayjs.com | Conway's Game of Life with HTML5 Canvas</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="/js/jquery.js"></script>
 		<script src="/game.js.php"></script>
 		<link rel="stylesheet" href="/game.css.php" />
 	</head>
@@ -18,7 +18,13 @@
 					<input id="seedSelect" type="button" />
 				</span>
 				<span class="control">
+					<input id="pasteRle" type="button" value="Paste RLE" />
+				</span>
+				<span class="control">
 					<input id="startButton" type="button" />
+				</span>
+				<span class="control">
+					<input id="clearButton" type="button" value="Clear" />
 				</span>
 				<span class="control">
 					<input id="resetButton" type="button" value="Reset" />
@@ -26,6 +32,7 @@
 				<span class="control">
 					<input id="saveButton" type="button" value="Save" />
 				</span>				
+				<span class="control" id="shape-label"></span>				
 			</div>
 			<a id="optionsButton" title="Options..." href="#">⚙ <span id="optionsSummary"></span></a>
 			<div id="options" style="display:none">
@@ -70,87 +77,6 @@
 			<div id="panel-content-area"></div>
 		</div>
 		<div id="picker"></div>
-		<script>
-			var $panel = $('#panel');
-			var $panelContent = $('#panel-content-area');
-			var $back = $('.panel-back');
-			var startingPng = false;
-			GameControls.prototype._setupSeedSelect = function() {
-				var button = this.elements.seedSelect;
-				button.value = 'Pick Shape';
-				$(button).click(function() {
-					if ($panelContent.html() == '') {						
-						$panelContent.html('Loading...').load('/game_shape_categories/browse');
-					}
-					$panel.show();
-				});
-			};
-			(function(start) {
-				GameControls.prototype.start = function() {
-					startingPng = controls.toPng();
-					start.call(this);
-				};
-			}(GameControls.prototype.start));
-			(function(reset) {
-				GameControls.prototype.reset = function() {
-					startingPng = false;
-					reset.call(this);
-				};
-			}(GameControls.prototype.reset));
-			function sendShapeDetails() {
-				var newPng = controls.toPng();
-				new WindowMessager(this)
-					.send('setCurrentImg', newPng)
-					.send('setStartingImg', startingPng || newPng)
-				;
-			}
-			GameControls.prototype.save = function() {
-				if (this.game.numPoints == 0) {
-					alert('Before saving, please choose a shape or click squares to add cells.');
-					return false;
-				}				
-				var modal = new Modal({
-					width: 800,
-					height: {viewportMinus:50},
-					url: '/game_shapes/save',
-					origin: this.elements.saveButton,
-					onload: sendShapeDetails
-				});
-			};
-			$panel.delegate('.panel-close', 'click', function(evt) {
-				evt.preventDefault();
-				$panel.hide();
-			});
-			$panelContent.delegate('.shape .item-nav-link', 'click', function(evt) {
-				evt.preventDefault();
-				evt.stopImmediatePropagation();
-				var href = $(this).prop('href');
-				$.ajax({
-					url: href
-				}).done(function(shape) {
-					controls.reset();
-					GameShapes.add(controls, shape.spec);
-					controls.renderer.draw();
-					startingPng = controls.toPng();
-				});
-				$panel.hide();
-			});
-			$panelContent.delegate('.category .item-nav-link', 'click', function(evt) {
-				evt.preventDefault();
-				console.log(this);
-				var href = $(this).prop('href');
-				$panelContent.html('Loading...').load(href);
-				$back.show();
-			});
-			$back.click(function() {
-				$panelContent.html('Loading...').load('/game_shape_categories/browse');
-				$back.hide();
-			});
-			var controls = new GameControls(
-				document.getElementById('controls'),
-				document.getElementById('board')
-			);
-			
-		</script>
+		<script src="/js/run.js"></script>
 	</body>
 </html>
