@@ -9,7 +9,7 @@ class GameController extends AppController {
 	public $uses = array();
 	
 	public function start() {
-		
+		$this->redirect('/run.html');
 	}
 	
 }

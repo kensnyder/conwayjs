@@ -33,6 +33,7 @@ class GameShapesController extends AppController {
 	}
 	
 	public function spec($shapeId) {
+		$shapeId = Cipher::usePreset('Id')->unobfuscate($shapeId);
 		if (preg_match('/^random(\d+)/', $shapeId, $match)) {
 			$percent = $match[1];
 			$spec = array(
@@ -41,8 +42,7 @@ class GameShapesController extends AppController {
 			);
 			$name = "Randomly filled: $percent%";
 		}			
-		else {
-			$shapeId = Cipher::usePreset('Id')->unobfuscate($shapeId);
+		else {			
 			$this->GameShape->contain('GameRule');
 			$shape = $this->GameShape->findById($shapeId);
 			$s = (object) $shape['GameShape'];

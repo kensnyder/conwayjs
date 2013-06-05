@@ -143,9 +143,7 @@
 			$('#PasteRle').hide();	
 		})
 		.on('setBoardOptions', function(options) {
-console.log(options);			
 			function unserializeSelect(element, serial) {
-console.log('unser',serial,element);				
 				$.each(serial.options, function(i, option) {
 					element.options[i] = new Option(option.text, option.value);
 				});

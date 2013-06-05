@@ -9,6 +9,33 @@ App::uses('AppModel', 'Model');
  */
 class GameShape extends AppModel {
 	
+	public function beforeSave($options = array()) {
+		if (isset($this->data['GameShape']['rulestring']) && !isset($this->data['GameShape']['game_rule_id'])) {
+			$rule = $this->getModel('GameRule')->findByRulestring($this->data['GameShape']['rulestring']);
+			if ($rule) {
+				$ruleId = $rule['GameRule']['id'];
+			}
+			else {
+				$this->GameRule->create();
+				$this->GameRule->save(array(
+					'GameRule' => array(
+						'name' => $this->data['GameShape']['rulestring'],
+						'description' => '',
+						'rulestring' => $this->data['GameShape']['rulestring'],
+						'type' => null,
+						'link' => '',
+						'sort' => '1000',
+						'is_custom' => '1',
+					)
+				));
+				$ruleId = $this->GameRule->id;
+			}
+			$this->data['GameShape']['game_rule_id'] = $ruleId;
+			unset($this->data['GameShape']['rulestring']);
+		}
+		return true;
+	}
+	
 	public function findByCategory($catId) {
 		$shapes = $this->find('all', array(
 			'fields' => array(
