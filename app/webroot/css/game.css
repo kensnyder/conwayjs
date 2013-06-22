@@ -215,9 +215,12 @@ html.modal body {
 .control a:focus {
 	background-color: #fff;
 }
+#loginButton {
+	background-position: 4px -350px;
+	margin-left: 12px;
+}
 #seedSelect {
 	background-position: 4px 2px;
-	margin-left: 12px;
 }
 #startButton {
 	background-position: 4px -30px;

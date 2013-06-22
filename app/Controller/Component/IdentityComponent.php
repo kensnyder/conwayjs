@@ -2,9 +2,9 @@
 
 App::uses('Component', 'Controller');
 
-class IdentityComponent {
+class IdentityComponent extends Component {
 	
-	public $fields = array('username'=>'email', 'password'=>'password');
+	public $fields = array('email'=>'email', 'password'=>'password');
 	
 	public $rememberMeDuration = '30 days';
 	
@@ -22,21 +22,23 @@ class IdentityComponent {
 		$this->controller = $controller;
 	}	
 	
-	public function login($username, $password, $rememberMe) {
+	public function login($email, $password, $rememberMe) {
 		$this->controller->loadModel('User');
 		$user = $this->controller->User->find('first', array(
 			'conditions' => array(
-				$this->fields['username'] => $username
+				$this->fields['email'] => $email
 			)
 		));
 		if (!$user) {
 			$this->error = self::USER_NOT_FOUND;
 			return false;
 		}
-		$expectedHash = $this->hashPassword($user['User'][$this->fields['username']], $password);
+		$expectedHash = $this->hashPassword($user['User'][$this->fields['email']], $password);
 		if ($expectedHash != $user['User'][$this->fields['password']]) {
 			$this->error = self::WRONG_PASSWORD;
+			return false;
 		}
+		unset($user[$this->fields['password']]);
 		$this->Session->write('Identity', $user);
 		if ($rememberMe) {
 			$token = sha1(uniqid() . microtime());
@@ -50,6 +52,7 @@ class IdentityComponent {
 				)
 			));
 		}
+		return true;
 	}
 	
 	public function logout() {
@@ -101,11 +104,11 @@ class IdentityComponent {
 		}
 	}
 	
-	public function hashPassword($username, $password) {
-		return sha1(Configure::read('Security.salt') . $username . $password);
+	public function hashPassword($email, $password) {
+		return sha1(Configure::read('Security.salt') . $email . $password);
 	}
 	
-	public function mandate($redirectTo = '/user/login', $message = 'Please log in to continue.') {
+	public function mandate($redirectTo = '/users/login', $message = 'Please log in to continue.') {
 		if ($this->user() === false) {
 			// TODO: pass $message to login page
 			$this->controller->redirect($redirectTo);

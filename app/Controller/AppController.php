@@ -61,24 +61,17 @@ class AppController extends Controller {
 		'Form',
 	);
 	
-	public $components = array(
+	public $components = array(		
 		// Cake components
 		'Session',
-		'Auth',
 		'RequestHandler',
 		'Cookie',
-	);	
+		// Custom components
+		'Identity',
+	);
 	
 	public function beforeFilter() {
-		if (isset($this->request->params['admin'])) {
-			// the user has accessed an admin function, so handle it accordingly.
-			$this->layout = 'admin';
-			$this->Auth->loginRedirect = array('controller'=>'users','action'=>'index');
-			$this->Auth->allow('login');
-		} else {
-			// the user has accessed a NON-admin function, so handle it accordingly.
-			$this->Auth->allow();
-		}
+		$this->set('authUser', $this->Identity->user());
 	}
 	
 	/**

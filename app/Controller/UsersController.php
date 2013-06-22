@@ -7,6 +7,34 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 
+	public function login() {
+		if ($this->Identity->user()) {
+			$this->redirect(array('controller'=>'users','action'=>'login_success'));
+			$this->redirect('/users/login_success');
+		}
+		$this->Session->setFlash('Please log in to continue.', 'flash_warning');
+		if ($this->request->is('post')) {
+			$ok = $this->Identity->login(
+				$this->request->data['User']['email'],
+				$this->request->data['User']['password'],
+				(bool) $this->request->data['User']['remember_me']
+			);
+			if ($ok) {
+				$this->redirect('/users/login_success');
+			}
+			else {
+				$this->Session->setFlash('Invalid username or password.', 'flash_failure');
+			}
+		}
+		$this->layout = 'modal';
+	}
+	
+	public function login_success() {
+		// HTML
+		$this->layout = 'modal';
+	}
+	
+	
 /**
  * index method
  *

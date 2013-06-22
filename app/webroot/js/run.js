@@ -8,6 +8,7 @@
 	var $panelContent = $('#panel-content-area');
 	var $back = $('.panel-back');
 	var $shapeLabel = $('#shape-label');
+	var $login = $('#loginButton');
 	var $about = $('#logoLink, #aboutButton');
 	var $fullscreen = $('#fullscreenButton');
 	var $exitFullscreen = $('#shrinkButton');
@@ -150,6 +151,15 @@
 			width: 700,
 			height: {viewportMinus:20},
 			url: '/about',
+			origin: $(this).get(0)
+		});
+	});	
+	$login.click(function() {
+		controls.stop();
+		var modal = new Modal({
+			width: 400,
+			height: 250,
+			url: '/users/login',
 			origin: $(this).get(0)
 		});
 	});	
