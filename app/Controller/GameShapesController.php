@@ -32,9 +32,9 @@ class GameShapesController extends AppController {
 		$this->view = 'browse';
 	}
 	
-	public function spec($shapeId) {
-		$shapeId = Cipher::usePreset('Id')->unobfuscate($shapeId);
-		if (preg_match('/^random(\d+)/', $shapeId, $match)) {
+	public function spec($obfuscatedShapeId) {
+		$id = Cipher::usePreset('Id')->unobfuscate($obfuscatedShapeId);
+		if (preg_match('/^random(\d+)/', $id, $match)) {
 			$percent = $match[1];
 			$spec = array(
 				'random' => true,
@@ -44,7 +44,7 @@ class GameShapesController extends AppController {
 		}			
 		else {			
 			$this->GameShape->contain('GameRule');
-			$shape = $this->GameShape->findById($shapeId);
+			$shape = $this->GameShape->findById($id);
 			$s = (object) $shape['GameShape'];
 			$spec = array(
 				'size' => array((int) $s->size_x, (int) $s->size_y),
@@ -64,10 +64,10 @@ class GameShapesController extends AppController {
 			}
 			$spec[$s->format] = $s->spec;
 			$name = $shape['GameShape']['name'];
-			$this->GameShape->addHit($shapeId);
+			$this->GameShape->addHit($id);
 		}
-		$this->set(compact('name','spec'));
-		$this->setJsonVars(array('name','spec'));
+		$this->set(compact('id','name','spec'));
+		$this->setJsonVars(array('id','name','spec'));
 	}
 	
 	public function submit() {

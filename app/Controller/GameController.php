@@ -10,6 +10,14 @@ class GameController extends AppController {
 	
 	public function start() {
 		$this->redirect('/run.html');
+		
+		
+		$this->layout = 'game';
+	}
+	
+	public function about() {
+		$this->layout = 'modal';
+		// HTML page
 	}
 	
 }

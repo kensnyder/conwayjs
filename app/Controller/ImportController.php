@@ -12,48 +12,48 @@ class ImportController extends AppController {
 	}
 	
 	public function files() {
-		$dir = '/Users/ksnyder/Sites/retreat/library';
+		$dir = APP . '/Writeable/tmp/jslife';
 		$parser = new Parser_Rle();
 		$i = 0;
-		foreach (new DirectoryIterator($dir) as $cat) {
-			if ($cat->isDot() || $cat->isFile()) {
+		$dupes = 0;
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $shape) {
+			$name = $shape->getFilename();
+			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+			if (!$shape->isFile() || $ext !== 'lif') {
 				continue;
 			}
-			$catName = $cat->getBaseName();
-			foreach (new DirectoryIterator($cat->getPathname()) as $shape) {
-				if ($shape->isDot()) {
-					continue;
-				}
-				$data = array();
-				$data['name'] = $shape->getBaseName();
-				$data['category'] = $catName;
-				$img = false;
-				foreach (new DirectoryIterator($shape->getPathName()) as $file) {
-					if ($file->isDot()) {
-						continue;
-					}						
-					$name = $file->getFilename();
-					$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
-					if ($ext == 'png') {
-						$imgData = getimagesize($file->getPathname());
-						$data = $data + array(
-							'image_path' => "/img/shapes/" . $file->getFilename(),
-							'image_width' => $imgData[0],
-							'image_height' => $imgData[1],
-						);
-						copy($file->getPathname(), ROOT . '/app/webroot/img/shapes/' . $file->getFilename());
-					}
-					elseif ($ext == 'rle') {
-						$data = $data + $parser->getData(file_get_contents($file->getPathname()));
-					}
-				}
-				$this->GameShape->create();
-				$this->GameShape->save(array('GameShape'=>$data));
-				$i++;
+			$data = array();
+			$data['name'] = 'jslife ' . preg_replace('~.+?/([^/]+)/([^./]+)\.lif$~i', '$1 $2', $shape->getPathName());
+			$data['created_by'] = 'Jason Summers';
+			$data['game_shape_category_id'] = 11;
+			$data = $data + $parser->getData(file_get_contents($shape->getPathname()));
+			$dupe = $this->GameShape->find('first', array(
+				'fields' => array('id'),
+				'conditions' => array(
+					'spec' => $data['spec']
+				)
+			));
+			if ($dupe) {
+				echo 'duplicate pattern ' . $data['name'] . '<br />';
+				$dupes++;
+				continue;
 			}
+			$this->GameShape->create();
+			$this->GameShape->save(array('GameShape'=>$data));
+			$i++;
 		}
-		die('imported ' . $i . ' shapes');
+		die("Imported $i shapes; ignored $dupes duplicates.");
 	}
 	
+	public function zip() {
+		$zip = new ZipArchive();
+		$res = $zip->open(APP . '/Writeable/tmp/jslife.zip');
+		if ($res !== true) {
+			die('Error ' . $res);
+		}
+		$ok = $zip->extractTo(APP . '/Writeable/tmp');
+		$zip->close();
+		die('Result: ' . $ok);
+	}
 	
 }

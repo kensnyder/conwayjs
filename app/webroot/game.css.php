@@ -2,7 +2,7 @@
 
 $files = array(
 	__DIR__ . '/css/fonts.css',
-	'/Users/ksnyder/Sites/retreat/assets/css/main.css', 
+	__DIR__ . '/css/run.css',
 	__DIR__ . '/css/main.css',
 	__DIR__ . '/css/game.css',
 	__DIR__ . '/css/Modal.css',

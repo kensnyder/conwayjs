@@ -128,7 +128,7 @@
 				size.width = this.options.width;
 			}
 			if (typeof this.options.height == 'object') {
-				size.height = size.viewportHeight - this.options.height.viewportMinus;
+				size.height = size.viewportHeight - this.options.height.viewportMinus - 40;
 			}
 			else {
 				size.height = this.options.height;

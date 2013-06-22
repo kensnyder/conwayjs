@@ -15,7 +15,7 @@
 					<img src="/img/logo.png" width="81" height="18" alt="conwayjs" />
 				</a>
 				<span class="control">
-					<input id="seedSelect" type="button" />
+					<input id="seedSelect" type="button" value="Shapes" />
 				</span>
 <!--				<span class="control">
 					<input id="pasteRle" type="button" value="Paste RLE" />
@@ -32,16 +32,28 @@
 				<span class="control">
 					<input id="saveButton" type="button" value="Save" />
 				</span>				
+				<span class="control">
+					<input id="aboutButton" type="button" value="About" />
+				</span>				
+				<span class="control">
+					<a id="onGithub" target="_blank" href="https://github.com/kensnyder/ConwaysGameOfLife/tree/master/assets/js">GitHub</a>
+				</span>				
+				<span class="control">
+					<input id="fullscreenButton" type="button" value="Fullscreen" />
+				</span>				
+				<span class="control">
+					<input id="shrinkButton" type="button" value="Fullscreen" />
+				</span>				
 				<span class="control" id="shape-label"></span>				
 			</div>
-			<a id="optionsButton" title="Options..." href="#">⚙ <span id="optionsSummary"></span></a>
+			<a id="optionsButton" title="Options..." href="#"><span id="optionsSummary"></span></a>
 			<div id="options" style="display:none">
 				<table>
 					<tr>
-						<th>Cell Size:</th>
+						<th>Zoom:</th>
 						<td>
 							<select id="blockSizeSelect"></select>
-							<input id="autoSize" type="button" value="Auto" style="display: none" />
+							<input id="fitToShape" type="button" value="Zoom to Fit" />
 						</td>
 					</tr>
 					<tr>
@@ -53,7 +65,7 @@
 						<td><select id="visitedSelect"></select></td>
 					</tr>
 					<tr>
-						<th>Gridlines:</th>
+						<th>Grid:</th>
 						<td><select id="gridlinesSelect"></select></td>
 					</tr>
 					<tr>

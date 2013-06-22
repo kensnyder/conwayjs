@@ -36,6 +36,16 @@ class GameShape extends AppModel {
 		return true;
 	}
 	
+	public function rle() {
+		$spec = false;
+		if (!empty($this->request->data)) {
+			$parser = new Parser_Rle();
+			$data = $parser->getData($this->request->data['rle']);
+			$spec = $data['spec'];
+		}
+		$this->set(compact('spec'));
+	}
+	
 	public function findByCategory($catId) {
 		$shapes = $this->find('all', array(
 			'fields' => array(
@@ -44,11 +54,11 @@ class GameShape extends AppModel {
 			'conditions' => array(
 				'spec !=' => '',
 				'game_shape_category_id' => $catId,
-				'is_approved' => true,
+				//'is_approved' => true,
 			),
 			'contain' => array(
 				'GameRule' => array('id','name','rulestring','link'),
-				'User' => array('id','name','is_active')
+				'User' => array('id','name')
 			),
 			'order' => array('GameShape.name')
 		));
@@ -101,7 +111,8 @@ class GameShape extends AppModel {
 		$shapes = $this->find('all', array(
 			'conditions' => array(
 				'is_approved' => false,
-			)
+			),
+			'order' => array('created DESC')
 		));
 		return $shapes;		
 	}
@@ -116,7 +127,8 @@ class GameShape extends AppModel {
 					'link LIKE' => "%$term%", 
 					'found_by LIKE' => "%$term%", 
 				)
-			)
+			),
+			'order' => array('name'),
 		));
 		return $shapes;
 	}

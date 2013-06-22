@@ -1,0 +1,126 @@
+html, body, #board {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	position: relative;
+	overflow: hidden;
+}
+a {
+	outline: none;
+}
+#controls {
+	background-color: #ddd;
+	padding: 3px 0;
+	position: absolute;
+	opacity: 0.50;
+	-webkit-transition: all 0.33s;
+	-moz-transition: all 0.33s;
+	-ms-transition: all 0.33s;
+	-o-transition: all 0.33s;
+	transition: all 0.33s;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 21px;
+	cursor: default;
+}
+#controls:hover {
+	opacity: 1;
+}
+.control {
+	margin-right: 12px;
+	vertical-align: middle;
+}
+.control * {
+	vertical-align: middle;
+}
+#options {
+	position: absolute;
+	top: 27px;
+	right: 0;
+	background-color: #ddd;
+	padding: 8px;
+	border-radius: 0 0 0 20px;
+	font-size: 11px;
+}
+#options select {
+	font-size: 11px;
+}
+#options input {
+	font-size: 11px;
+	height: 18px;
+}
+#options #ruleSelect optgroup,
+#options #ruleSelect option,
+#options #ruleSelect {
+	font: 10px Monaco, "Bitstream Vera Sans Mono", Consolas, "Courier New", monospace;
+	font-style: normal;
+	background-color: #fff;
+}
+#options #ruleSelect optgroup[label] {
+	background-color: #ddd;
+}
+#options th {
+	text-align: right;
+	font-weight: normal;
+	vertical-align: middle;
+}
+#options td {
+	padding: 2px;
+}
+#board {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+body, select, input {
+	font: 13px Arial;
+}
+#optionsButton {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 8px;
+	font-size: 30px;
+	line-height: 24px;
+	text-decoration: none;
+	color: #555;
+	cursor: pointer;
+}
+#optionsButton:hover {
+	text-decoration: none;
+	color: #000;
+}
+#optionsSummary {
+	font-size: 11px;
+	vertical-align: middle;
+}
+#optionsClose {
+	font-size: 12px;
+	color: #555;
+	text-decoration: none;
+}
+#optionsClose:hover {
+	color: #000;
+	text-decoration: none;
+}
+#infoButton {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border-radius: 9px;
+	margin: 0 16px 0 8px;
+	font: 16px/16px "Times New Roman", Times, serif;
+	font-style: italic;
+	background-color: #555;
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+}
+#infoButton:hover {
+	background-color: #000;
+	text-decoration: none;
+}
+#controlsMain {
+	display: inline-block;
+}

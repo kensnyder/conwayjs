@@ -5,10 +5,8 @@ html.modal body {
 }
 #logoLink {
 	text-decoration: none;
-	margin-left: 8px;
-}
-.control input {
-	height: 23px;
+	margin-left: 12px;
+	margin-top: 2px;
 }
 #panel {
 	position: absolute;
@@ -93,6 +91,9 @@ html.modal body {
 .item-box {
 	display: table-row;
 }
+.item-box.focused {
+    background-color: #EAECFF;
+}
 .item-column {
 	display: table-cell;
 	padding: 8px;
@@ -100,7 +101,8 @@ html.modal body {
 	border-bottom: 1px solid #ccc;
 }
 .shape-thumb img {
-	width: 100px;
+	max-width: 100px;
+	max-height: 150px;
 }
 .shape-thumb {
 	padding-right: 8px;
@@ -179,4 +181,125 @@ html.modal body {
 #GameShapeSaveForm .submit {
 	float: right;
 	margin-top: 15px;
+}
+#controls {
+	padding-top: 2px;
+}
+.control {
+	margin-right: 4px;
+	display: block;
+	float: left;
+}
+.control input,
+.control a {
+	display: block;
+	background: #f0f0f0 url("/img/icon-sprite.png") no-repeat 5px 0;
+	padding: 0 8px 0 23px;
+	border: 1px solid #A0AFFF;
+	border-radius: 2px;
+	height: 22px;
+	line-height: 22px;
+	text-decoration: none;
+	color: #1E3EF6;
+	text-align: left;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.control input:hover,
+.control a:hover,
+.control input:focus,
+.control a:focus {
+	background-color: #fff;
+}
+#seedSelect {
+	background-position: 4px 2px;
+	margin-left: 12px;
+}
+#startButton {
+	background-position: 4px -30px;
+	width: 74px;	
+}
+.game-started #startButton {
+	background-position: 4px -62px;
+}
+#clearButton {
+	background-position: 4px -94px;
+}
+#resetButton {
+	background-position: 4px -126px;
+}
+#saveButton {
+	background-position: 4px -158px;
+}
+#aboutButton {
+	background-position: 4px -254px;
+}
+#onGithub {
+	background-position: 4px -190px;
+}
+#fullscreenButton {
+	background-position: 4px -510px;
+}
+#shrinkButton {
+	background-position: 4px -478px;
+}
+#optionsButton {
+	display: block;
+	padding-left: 21px;
+	background: #ddd url("/img/icon-sprite.png") no-repeat 0 -283px;
+	color: #1E3EF6; 
+}
+#optionsButton:hover {
+	display: block;
+	background-color: #ddd;
+	color: #1E3EF6; 
+}
+#options {
+    top: 26px;
+}
+#options select,
+#options input {
+    top: 26px;
+	color: #1E3EF6; 
+	border: 1px solid #A0AFFF;
+	height: 20px;	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;	
+	border-radius: 2px;
+}
+#options th,
+#optionsClose {
+	color: #1E3EF6;
+}
+#shape-label {
+	color: #1E3EF6; 
+	margin-left: 16px;
+	height: 22px;
+	line-height: 22px;
+}
+
+
+
+
+
+.shortcut-keys th {
+	text-align: left;
+	padding-right: 3px;
+}
+.key {
+	border: 1px solid #bbb;
+	background: #f1f1f1;
+	font: 12px/120% Monaco,"Bitstream Vera Sans Mono",Consolas,monospace;
+	padding: 0 5px;
+}
+.credit {
+	color: #666;
+	font-family: IstokItalic;
 }
